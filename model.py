@@ -27,13 +27,20 @@ class Profile:
         self.login : bool = False
 
 class Task:
-    def __init__(self,task_id:int,title:str) -> None:
+    def __init__(self,
+                 task_id : int,
+                 title : str,
+                 created : str = datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
+                 last_updated : str = datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                 status = Status.UNSTARTED,
+                 to_be_repeated = RepeatCycle.NONE
+                 ) -> None:
         self.task_id : int = task_id
         self.title : str = title
-        self.created : str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.last_updated : str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.status : Status = Status.UNSTARTED
-        self.to_be_repeated : RepeatCycle =  RepeatCycle.NONE
+        self.created : str = created
+        self.last_updated : str = last_updated
+        self.status : Status = Status(status) if isinstance(status,str) else status 
+        self.to_be_repeated : RepeatCycle = RepeatCycle(to_be_repeated) if isinstance(to_be_repeated,str) else to_be_repeated
     
     def to_dict(self)->dict:
         return {
@@ -44,3 +51,14 @@ class Task:
                 "status" : self.status.value,
                 "to_be_repeated" : self.to_be_repeated.value
                 }
+
+    @classmethod
+    def from_dict(cls,data:dict)->Task:
+        return cls(
+                task_id = int(data["task_id"]),
+                title = data["title"],
+                created = data["created"],
+                last_updated = data["last_updated"],
+                status = Status(data["status"]),
+                to_be_repeated = RepeatCycle(data["to_be_repeated"]),
+                )

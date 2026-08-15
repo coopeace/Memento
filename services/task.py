@@ -1,19 +1,19 @@
 from InquirerPy import inquirer
 from model import Profile,Status,RepeatCycle,Task
 from datetime import datetime
+from .session import current_session
+from .task_manager import task_manager
 
-from .task_manager import taskManager
-
-class AddTaskCommand(Task):
+class AddTaskCommand:
     def __init__(self):
-        self.title = input("Enter Task:")
+        self.title = input(" Enter Task: ")
 
     def execute(self):
-        print(taskManager.add_task(self.title))
+        print(task_manager.add_task(self.title))
 
 class ViewTasksCommand():
     def execute(self):
-        taskManager.view_tasks()
+        task_manager.view_tasks()
 
 class ModifyTasksCommand():
     def execute(self):
@@ -33,7 +33,4 @@ class CommpletedTasksCommand():
 
 class QuitCommand():
     def execute(self):
-        print(taskManager.quit_manager())
-        print("Exiting....")
-        quit()
-    
+        current_session.QuitExecutions()

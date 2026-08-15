@@ -3,6 +3,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 from services import task
+from services.session import current_session
 
 Menu = {
         "➕ Add a Task":task.AddTaskCommand,
@@ -15,6 +16,9 @@ Menu = {
 }
 
 def main():
+
+    current_session.StartUpExecutions()
+
     while(True):
 
         console = Console()
