@@ -20,29 +20,33 @@ def main():
     current_session.StartUpExecutions()
 
     while(True):
+        try :
+            console = Console()
 
-        console = Console()
+            console.print(
+                    Align.center(
+                        Panel.fit(
+                            "[bold green]Memento[/]",
+                            border_style="cyan"
+                            )
+                        )
+                    )
 
-        console.print(
-            Align.center(
-                Panel.fit(
-                    "[bold green]My Awesome App[/]",
-                    border_style="cyan"
-                )
-            )
-        )
+            choice = inquirer.select(
+                    "",
+                    choices= list(Menu.keys()),
+                    ).execute()
 
-        choice = inquirer.select(
-            "",
-            choices= list(Menu.keys()),
-          ).execute()
+            command = Menu.get(choice)
 
-        command = Menu.get(choice)
+            if command:
+                command_instance = command()
+                command_instance.execute()
 
-        if command:
-            command_instance = command()
-            command_instance.execute()
-            
+        except KeyboardInterrupt:
+            quit_application = task.QuitCommand()
+            quit_application.execute()
+        
 
 if __name__=="__main__":
     main()

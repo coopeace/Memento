@@ -19,6 +19,25 @@ class TaskManager:
         for task in self.tasks.values():
              print(f"{task.task_id}. {task.title} [{task.status.value}]")
 
+    def remove_task(self,id:int) -> str :
+        try :
+            task = task_manager.tasks.pop(id)
+            if id < 1 and id > len(task_manager.tasks):
+                print("id is below id number 1")
+            else :
+                task_manager.task_counter -= 1
+                for key,value in task_manager.tasks.items():
+                    if key > id :
+                        key -= 1
+                        value.task_id -= 1
+
+            return f"'{task.title}' is removed."
+        except KeyError as err:
+            return f"{err}"
+
+    def modify_task(self,id:int) -> str:
+        return f"'{id}' is removed."
+
     def save_to_json(self) -> str:
         save_data = [ task.to_dict() for task in self.tasks.values() ]
 

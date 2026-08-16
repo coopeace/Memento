@@ -6,7 +6,7 @@ class Session():
     def StartUpExecutions(self):
 
         print("Starting Session......")
-        print("Import Saved Data .....")
+        print("Imported Saved Data .....")
 
         # file_name = get_file_name()
         # task_manager.file_name = file_name
