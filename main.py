@@ -2,7 +2,7 @@ from InquirerPy import inquirer
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
-from services import task
+from core import task
 from services.session import current_session
 
 Menu = {
@@ -31,6 +31,8 @@ def main():
                             )
                         )
                     )
+
+            console.print()
 
             choice = inquirer.select(
                     "",
